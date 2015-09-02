@@ -24,7 +24,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +46,8 @@ public class MainActivity extends Activity {
     private TextView cy, zwx, xc, ly, sszs, cl, ls, gm;
     private TextView future1, future2, future3, future4, future5;
     private ImageView weather_img1, weather_img2;
+    private ImageButton choose_city,show_list;
+    private DrawerLayout mDrawerLayout;
 
     // 城市名
     String city;
@@ -140,7 +148,10 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         // 接收从Test Activity传过来的城市码
         Intent intent = getIntent();
-        mCityCode = intent.getStringExtra("cityCode");
+        if (intent.getStringExtra("cityCode") != null) {
+            mCityCode = intent.getStringExtra("cityCode");
+        }
+
         // 初始化一些控件
         time = (TextView) findViewById(R.id.time);
         cityname = (TextView) findViewById(R.id.cityname);
@@ -162,6 +173,29 @@ public class MainActivity extends Activity {
         future5 = (TextView) findViewById(R.id.future5);
         weather_img1 = (ImageView) findViewById(R.id.img1);
         weather_img2 = (ImageView) findViewById(R.id.img2);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        choose_city = (ImageButton) findViewById(R.id.btnChoose);
+        choose_city.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Test.class);
+                startActivity(intent);
+                MainActivity.this.finish();
+            }
+
+        });
+        show_list = (ImageButton) findViewById(R.id.btnList);
+        show_list.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+            }
+
+        });
+
         // 产生一个对话框，在网络连接不好的时候显示正在获取数据...
         dialog = new ProgressDialog(MainActivity.this);
         dialog.setMessage(getResources().getString(

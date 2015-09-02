@@ -55,6 +55,7 @@ public class Test extends Activity {
                     intent.putExtra("cityCode", cityCode);
                     intent.putExtra("cityCodeName", cityCodeName);
                     startActivity(intent);
+                    Test.this.finish();
                 }else{
                     tv.setText("该地区不存在");
                 }
@@ -70,6 +71,7 @@ public class Test extends Activity {
                 intent.putExtra("cityCode", cityCode);
                 intent.putExtra("cityCodeName", cityCodeName);
                 startActivity(intent);
+                Test.this.finish();
             }
 
         });
